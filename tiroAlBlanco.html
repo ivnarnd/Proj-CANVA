@@ -1,0 +1,55 @@
+<canvas width="600" height="400"></canvas>
+<script>
+    var pantalla= document.querySelector("canvas");
+    var pincel=pantalla.getContext("2d");
+    pincel.fillStyle="lightgrey";
+    pincel.fillRect(0,0,600,400);
+
+    function dibujarcirc(x,y,radio,color){
+        pincel.fillStyle=color;
+        pincel.beginPath();
+        pincel.arc(x,y,radio,0,2*Math.PI);
+        pincel.fill();
+    }
+    function limpiarPantalla(){
+        pincel.clearRect(0,0,600,400);
+    }
+    var x = 0
+    var sentido = 1;
+    var radio=10;
+    function aleatorio(maximo){
+        return Math.floor(Math.random()*maximo);
+    }
+    function disenharObjetivo(xA,yA){
+        
+        dibujarcirc(xA,yA,radio+20,"red");
+        dibujarcirc(xA,yA,radio+10,"white");
+        dibujarcirc(xA,yA,radio,"red");
+    }
+     var xAleatorio=aleatorio(600);
+     var yAleatorio=aleatorio(400);
+     
+    function actualizarPantalla(){
+        xAleatorio=aleatorio(600);
+        yAleatorio=aleatorio(400);
+        limpiarPantalla();
+        disenharObjetivo(xAleatorio,yAleatorio);
+        
+
+        }
+    
+    setInterval(actualizarPantalla,1000);
+
+    function disparar(evento){
+        x=evento.pageX-pantalla.offsetLeft;
+        y=evento.pageY-pantalla.offsetTop;
+    if ((x<xAleatorio+radio)&&(x>xAleatorio-radio)&&(y<yAleatorio+radio)&&(y>yAleatorio-radio)) {
+        alert("Usted Acerto!");  
+        }
+    
+
+    }
+    pantalla.onclick = disparar;
+    
+    
+</script>
